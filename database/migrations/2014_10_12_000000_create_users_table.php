@@ -15,12 +15,20 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->string('name')->nullable();
+            $table->string('email');
+
+            //todo:github以外のログイン認証も追加予定
+
+            $table->enum('provider', ['github']);
+            $table->string('github_id');
+            $table->string('avatar_url')->nullable();
+            $table->text('bio')->nullable();
+            $table->text('github_token');
+            $table->text('github_refresh_token');
+
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });
     }
 
