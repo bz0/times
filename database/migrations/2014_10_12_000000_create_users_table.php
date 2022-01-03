@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar_url')->nullable();
             $table->text('bio')->nullable();
             $table->text('github_token');
-            $table->text('github_refresh_token');
+            $table->text('github_refresh_token')->nullable();
 
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
