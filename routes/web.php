@@ -5,6 +5,7 @@ use Laravel\Socialite\Facades\Socialite;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Enums\Provider;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,13 +37,20 @@ Route::get('/auth/github/callback', function () {
 
     if ($user) {
         $user->update([
+            'name' => $githubUser->name,
+            'email' => $githubUser->email,
+            'bio' => $githubUser->user['bio'],
+            'avatar_url' => $githubUser->user['avatar_url'],
             'github_token' => $githubUser->token,
             'github_refresh_token' => $githubUser->refreshToken,
-        ]);
+        ]); //プロフィール変更したら更新されるようにするため
     } else {
         $user = User::create([
             'name' => $githubUser->name,
             'email' => $githubUser->email,
+            'provider' => Provider::GITHUB,
+            'bio' => $githubUser->user['bio'],
+            'avatar_url' => $githubUser->user['avatar_url'],
             'github_id' => $githubUser->id,
             'github_token' => $githubUser->token,
             'github_refresh_token' => $githubUser->refreshToken,
