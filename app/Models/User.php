@@ -15,4 +15,9 @@ class User extends Authenticatable
     protected $guarded = [
         'id'
     ];
+
+    protected $hidden = [
+        'github_refresh_token',
+        'github_token',
+    ];
 }
