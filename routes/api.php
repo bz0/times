@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\OAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::middleware('auth:api')->get('/me', function (Request $request) {
+    return $request->user();
+});
+
+Route::get('/login/{provider}', [OAuthController::class, 'getProviderOAuthURL'])
+            ->where('provider', 'github')->name('oauth.request');
+
+Route::get('/auth/{provider}/callback', [OAuthController::class, 'handleProviderCallback'])
+            ->where('provider', 'github')->name('oauth.callback');

@@ -26,6 +26,11 @@ class CreateUsersTable extends Migration
             $table->text('bio')->nullable();
             $table->text('github_token');
             $table->text('github_refresh_token')->nullable();
+            $table->rememberToken();
+            $table->string('api_token', 80)
+                ->unique()
+                ->nullable()
+                ->default(null);
 
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));

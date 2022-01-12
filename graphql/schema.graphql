@@ -34,8 +34,8 @@ type Post {
 
 
 type Mutation {
-  createPost(input: PostInput @spread): Post @create
-  updatePost(id: ID, input: PostInput @spread): Post @update
+  createPost(input: PostInput @spread): Post @create @guard(with: ["api"])
+  updatePost(id: ID, input: PostInput @spread): Post @update @guard(with: ["api"])
 }
 
 input PostInput {
