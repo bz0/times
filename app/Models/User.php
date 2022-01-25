@@ -14,4 +14,9 @@ class User extends Authenticatable
     protected $guarded = [
         'id'
     ];
+
+    public function posts()
+    {
+        return $this->hasOne(User::class, 'user_id', 'id');
+    }
 }
