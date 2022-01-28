@@ -12,7 +12,7 @@ class PostLatest
     public function __invoke($_, array $args)
     {
         $posts = Post::orderBy("posts.updated_at","DESC")
-                    ->join('users', [['posts.user_id', '=', 'users.id']]);
+                    ->with('user');
         return $posts;
     }
 }
