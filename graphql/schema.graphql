@@ -8,7 +8,7 @@ type Query {
     users: [User!]! @paginate(defaultCount: 10)
     user(id: ID @eq): User @find
 
-    posts: [Post!]! @paginate(defaultCount: 10)
+    posts: [Post!]! @paginate(builder: "App\\GraphQL\\Queries\\PostLatest", defaultCount: 10)
 }
 
 type User {
