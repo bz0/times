@@ -8,7 +8,7 @@ type Query {
     users: [User!]! @paginate(defaultCount: 10)
     user(id: ID @eq): User @find
 
-    posts: [Post!]! @paginate(builder: "App\\GraphQL\\Queries\\PostLatest", defaultCount: 10)
+    posts(user_id: ID): [Post!]! @paginate(builder: "App\\GraphQL\\Queries\\PostLatest", defaultCount: 10)
 }
 
 type User {
@@ -36,9 +36,15 @@ type Post {
 type Mutation {
   createPost(input: PostInput @spread): Post @create @guard(with: ["api"])
   updatePost(id: ID, input: PostInput @spread): Post @update @guard(with: ["api"])
+  deletePost(input: DeletePostInput! @spread): Post @delete @guard(with: ["api"])
 }
 
 input PostInput {
   user_id: ID
   content: String
+}
+
+input DeletePostInput {
+  id: ID!
+  user_id: ID!
 }
